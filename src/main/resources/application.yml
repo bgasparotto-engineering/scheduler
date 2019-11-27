@@ -1,0 +1,25 @@
+server:
+  port: 10003
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/scheduler
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: scheduler
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    listener:
+      missing-topics-fatal: false
+    properties:
+      schema:
+        registry:
+          url: http://localhost:8081
