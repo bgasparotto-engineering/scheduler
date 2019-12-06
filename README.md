@@ -33,8 +33,9 @@ Run the main class `SchedulerApplication.java`
 
 ## Interacting with the service
 1. Hit the endpoint http://localhost:10003/management/trigger-update-now
-2. Check the logs where produced and consumed messages will be displayed as a result;
+2. Check the logs where the produced messages will be displayed as a result;
 3. Visit the Schema Registry at http://localhost:8081/subjects and you should see the created subject by Avro.
+4. Visit the Control Center at http://http://localhost:9091 to find details about the Kafka cluster.
 
 ### Generating Avro source code
 This project uses [Gradle Avro Plugin](https://github.com/davidmc24/gradle-avro-plugin) for generating Java classes for 
