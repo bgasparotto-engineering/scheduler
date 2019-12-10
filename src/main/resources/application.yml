@@ -5,6 +5,8 @@ spring:
     url: jdbc:postgresql://localhost:5433/scheduler
     username: postgres
     password: password
+  flyway:
+    enabled: false
   jpa:
     hibernate:
       ddl-auto: validate
