@@ -1,15 +1,6 @@
 # Scheduler
 Microservice for scheduling Kafka messages to trigger the call for Hansard data updates.
 
-## Main stack
-- Spring Boot
-- Java 11
-- Apache Kafka
-- Apache Avro
-- Confluent schema-registry
-- Flyway
-- Postgres
-
 ## Running the service
 Run docker-compose:
 ```shell script
