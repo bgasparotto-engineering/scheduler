@@ -1,19 +1,24 @@
 package com.bgasparotto.scheduler.messaging.producer;
 
 import com.bgasparotto.scheduler.message.RunUpdate;
-import com.bgasparotto.scheduler.messaging.KafkaTest;
-import org.apache.kafka.clients.consumer.Consumer;
+import com.bgasparotto.spring.kafka.avro.test.EmbeddedKafkaAvro;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.List;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RunUpdateProducerTest extends KafkaTest {
+@SpringBootTest
+@ActiveProfiles("test")
+@EmbeddedKafka
+public class RunUpdateProducerTest {
+
+    @Autowired
+    private EmbeddedKafkaAvro embeddedKafkaAvro;
 
     @Autowired
     private RunUpdateProducer producer;
@@ -21,25 +26,17 @@ public class RunUpdateProducerTest extends KafkaTest {
     @Value("${topics.output.run-hansard-update}")
     private String topic;
 
-    private Consumer<String, RunUpdate> consumer;
-
-    @BeforeEach
-    public void setup() {
-        consumer = createConsumer();
-        consumer.subscribe(List.of(topic));
-    }
-
     @Test
     public void shouldProduceUpdatedMessage() {
-        RunUpdate testMessage = createTestMessage();
+        RunUpdate testMessage = buildTestMessage();
         producer.produce(testMessage);
 
-        ConsumerRecord<String, RunUpdate> consumedRecord = consumeOne(consumer, topic);
+        ConsumerRecord<String, RunUpdate> consumedRecord = embeddedKafkaAvro.consumeOne(topic);
         assertThat(consumedRecord.key()).isEqualTo(testMessage.getDescription());
         assertThat(consumedRecord.value()).isEqualTo(testMessage);
     }
 
-    private RunUpdate createTestMessage() {
+    private RunUpdate buildTestMessage() {
         return RunUpdate.newBuilder()
                 .setDescription("Test message")
                 .build();

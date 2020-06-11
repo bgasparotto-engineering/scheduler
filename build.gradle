@@ -21,6 +21,7 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url 'https://packages.confluent.io/maven/'
@@ -45,6 +46,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation 'com.bgasparotto:spring-kafka-avro-test:1.0.0-SNAPSHOT'
 }
 
 test {
