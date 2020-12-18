@@ -46,7 +46,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.kafka:spring-kafka-test'
-    testImplementation 'com.bgasparotto:spring-kafka-avro-test:1.0.0-SNAPSHOT'
+    testImplementation 'com.bgasparotto:spring-kafka-avro-test:1.0.0'
 }
 
 test {
